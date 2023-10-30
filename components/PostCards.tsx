@@ -4,15 +4,15 @@ import Link from 'next/link'
 import React from 'react'
 
 
-const PostCards = ({id, title, category, cover, author}:TPosts) => {
+const PostCards = ({id, title, categoryName, author}:TPosts) => {
     return (
         <Link href={`/posts/${id}`} className='shadow-md w-fit rouded-md group'>
             <div className='relative group-hover:opacity-90'>
-                <Image src={cover} width={800} height={800} alt='image' />
+                <Image src={'https://images.pexels.com/photos/1519088/pexels-photo-1519088.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'} width={800} height={800} alt='image' />
             </div>
             <div className='p-3'>
                 <div>
-                    <span className='text-sm my-3 text-gray-500'>{category}</span>
+                    <span className='text-sm my-3 text-gray-500'>{categoryName}</span>
                     <h1 className='font-bold my-2'>{title}</h1>
                 </div>
                 <div className='mt-4'>

@@ -7,9 +7,9 @@ import {redirect} from 'next/navigation'
 
 const page = async () => {
   const session = await getServerSession(authOptions)
-  // if(!session){
-  //   redirect('/sign-in')
-  // }
+  if(!session){
+    redirect('/sign-in')
+  }
   return (
     <div className='w-[60%] mx-auto'>
       <CreatePost/>

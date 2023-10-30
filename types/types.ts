@@ -1,12 +1,13 @@
+import { type } from "os"
 
 
-export interface TPosts {
-    id: number,
+export type TPosts = {
+    id: string,
     title: string,
-    desc: string,
-    category: string,
-    author: string,
-    cover: string
+    content: string,
+    categoryName?: string,
+    author?: string,
+    featureImage?: string
 }
 
 export type TCategory = {
