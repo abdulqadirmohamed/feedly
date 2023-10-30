@@ -13,9 +13,9 @@ const Header = () => {
         <Link href={"/"} className="text-2xl font-semibold text-red-500">Feedly</Link>
         <nav className="flex gap-6">
           <Link href={"/"}>Home</Link>
-          <Link href={"/"}>Technology</Link>
-          <Link href={"/"}>Sports</Link>
-          <Link href={"/"}>Programming</Link>
+          <Link href={"/technology"}>Technology</Link>
+          <Link href={"/sports"}>Sports</Link>
+          <Link href={"/programming"}>Programming</Link>
         </nav>
         <div className="flex items-center gap-2">
         <Link href={"/create-post"}>Create Post</Link>

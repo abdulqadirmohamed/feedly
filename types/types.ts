@@ -1,16 +1,15 @@
-import { type } from "os"
-
+import { type } from "os";
 
 export type TPosts = {
-    id: string,
-    title: string,
-    content: string,
-    categoryName?: string,
-    author?: string,
-    featureImage?: string
-}
+  id: string;
+  title: string;
+  content: string;
+  categoryName?: string;
+  featureImage?: string;
+  author?: string
+};
 
 export type TCategory = {
-    id: string,
-    categoryName: string,
-}
+  id: string;
+  categoryName: string;
+};
