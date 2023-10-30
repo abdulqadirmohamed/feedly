@@ -49,6 +49,7 @@ const CreatePost = () => {
 
       if (res.ok) {
         router.push("/");
+        router.refresh()
       } else {
         setError("Something went wrong.");
       }

@@ -19,7 +19,7 @@ const PostCards = ({ id, title, categoryName, author, content }: TPosts) => {
       <div className="p-3 relative">
         <div>
           <span className="text-sm my-3 text-gray-500">{categoryName}</span>
-          <h1 className="font-bold my-2">{title}</h1>
+          <h1 className="font-bold my-2 line-clamp-2">{title}</h1>
         </div>
         <div className="mt-4">
           <hr />
@@ -34,13 +34,11 @@ const PostCards = ({ id, title, categoryName, author, content }: TPosts) => {
             alt="User profile"
             className="rounded-full"
           />
-          <div className="absolute bottom-3">
-            <div className="flex">
+            <div className="flex flex-row items-center gap-5">
               <span className="font-medium">{author}</span>
               <span className="text-gray-500">17 Oct 2023</span>
             </div>
           </div>
-        </div>
       </div>
     </Link>
   );

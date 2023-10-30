@@ -27,7 +27,7 @@ export default async function Home() {
       <div className="w-[60%] mx-auto">
         <CategoriesList />
 
-        <div className="grid grid-cols-3 gap-6 mt-10">
+        <div className="grid md:grid-cols-3 gap-6 mt-10">
           {posts && posts.length > 0 ? (
             posts.map((post: TPosts) => (
               <PostCards
@@ -36,7 +36,6 @@ export default async function Home() {
                 title={post.title}
                 content={post.content}
                 author={post.author.name}
-                author={post.author.image}
               />
             ))
           ) : (
