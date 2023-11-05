@@ -2,7 +2,23 @@ import { TPosts } from '@/types/types'
 import Image from 'next/image'
 import React from 'react'
 
-const page = () => {
+const getpost = async (id: string) =>{
+    try {
+        const res = await fetch(`http://localhost:3000/api/posts/${id}`,{
+            cache: 'no-store'
+        })
+        if(res.ok){
+            const post = await res.json()
+            return post
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const page = async ({ params }: { params: { id: string } }) => {
+    const id = params.id
+    const post = await getpost(id)
     return (
         <div className='w-[60%] mx-auto'>
             <div>
@@ -11,13 +27,13 @@ const page = () => {
                         src={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}
                         width={30} height={30} alt="User profile"
                         className='rounded-full' />
-                    <span className='font-medium'>Abdulqadir</span>
+                    <span className='font-medium'>{post.author.name}</span>
                     <span className='text-gray-500'>17 Oct 2023</span>
                 </div>
                 <hr />
                 <div className='my-5'>
-                    <h1 className='font-bold text-2xl'>How to setup notifications using ROQ ai</h1>
-                    <p className='my-3'>In this tutorial, we will dive into the powerful world of notifications using the ROQ Platform. Notifications play a vital role in any successful software application, keeping users engaged and informed about essential updates, events, or actions. With ROQ's notification system, we can effortlessly add new notifications to our project and deliver them to users through various channels, including in-app notifications, traditional e-mails, SMS, or push messages.</p>
+                    <h1 className='font-bold text-2xl'>{post.title}</h1>
+                    <p className='my-3'>{post.content}</p>
                 </div>
             </div>
         </div>
