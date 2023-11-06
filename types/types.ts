@@ -6,7 +6,8 @@ export type TPosts = {
   content: string;
   categoryName?: string;
   featureImage?: string;
-  author?: string
+  author?: string;
+  createdAt: string
 };
 
 export type TCategory = {

@@ -3,7 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const PostCards = ({ id, title, categoryName, author, content }: TPosts) => {
+const PostCards = ({ id, title, categoryName, author, content, createdAt }: TPosts) => {
+
+  const dateOpject = new Date(createdAt)
+  const options: Intl.DateTimeFormatOptions = {
+    month: 'short',
+    year: 'numeric',
+    day: 'numeric'
+  }
+  const formattedDate = dateOpject.toLocaleDateString('en-US', options)
+
   return (
     <Link href={`/posts/${id}`} className="shadow-md w-fit rouded-md group">
       <div className="group-hover:opacity-90">
@@ -34,11 +43,11 @@ const PostCards = ({ id, title, categoryName, author, content }: TPosts) => {
             alt="User profile"
             className="rounded-full"
           />
-            <div className="flex flex-row items-center gap-5">
-              <span className="font-medium">{author}</span>
-              <span className="text-gray-500">17 Oct 2023</span>
-            </div>
+          <div className="flex flex-row items-center gap-5">
+            <span className="font-medium">{author}</span>
+            <span className="text-gray-500">{formattedDate}</span>
           </div>
+        </div>
       </div>
     </Link>
   );

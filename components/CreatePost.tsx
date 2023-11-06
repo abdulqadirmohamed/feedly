@@ -3,6 +3,8 @@ import { TCategory } from "@/types/types";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { NextResponse } from "next/server";
+import { CldUploadButton } from "next-cloudinary";
+import {BiImage} from 'react-icons/bi'
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -114,10 +116,11 @@ const CreatePost = () => {
           <h1>Featured Image</h1>
           <hr />
           <div className="my-4">
-            <input
-              type="file"
-              onChange={(e) => setFeaturedImage(e.target.value)}
-            />
+            <CldUploadButton uploadPreset="jpoyynuj" className="grid place-items-center w-full h-48 bg-slate-100 border-dotted border-2 rounded-md">
+              <div>
+                <BiImage size={30}/>
+              </div>
+            </CldUploadButton>
           </div>
         </div>
       </form>
