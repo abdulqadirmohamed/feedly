@@ -17,8 +17,8 @@ export const authOptions: AuthOptions = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials){
-        if(!credentials?.email || !credentials?.password){
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
           return null
         }
         const user = await prisma.user.findFirst({
@@ -26,17 +26,19 @@ export const authOptions: AuthOptions = {
             email: credentials.email
           }
         });
-        if(!user || !user.id || !user.hashedPassword){
+        if (!user || !user.id || !user.hashedPassword) {
           return null
         }
         const correctPassword = await bcrypt.compare(credentials.password, user.hashedPassword);
-        if(!correctPassword){
+        if (!correctPassword) {
           return null
         }
 
         return user;
       }
+
     }),
+
     GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
@@ -46,7 +48,20 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.userId = user.id;
+      }
+      return token;
+    },
+    // async session({ session, token }) {
+    //   session.user.id = token.userId;
+    //   return session;
+    // },
+  },
+
+secret: process.env.NEXTAUTH_SECRET,
 };
 const handler = nextAuth(authOptions);
 

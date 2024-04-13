@@ -1,34 +1,56 @@
 'use client'
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { AiFillGithub, AiOutlineGoogle } from "react-icons/ai";
-import { signIn } from 'next-auth/react'
+import { signIn } from "next-auth/react";
 
 import axios from "axios"
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("")
-  
+    const [formValues, setFormValues] = useState({
+        email: "",
+        password: "",
+    });
+
+    const [error, setError] = useState<string | undefined>(undefined);
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get("callbackUrl") || "/";
+
     const router = useRouter()
-  
-    const register = async () =>{
-        if(!email || !password){
-            setError("email and password are required")
+
+
+
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        try {
+            setFormValues({ email: "", password: "" });
+
+            const res = await signIn("credentials", {
+                redirect: false,
+                email: formValues.email,
+                password: formValues.password,
+                callbackUrl,
+            });
+
+            console.log(res);
+            if (!res?.error) {
+                router.push(callbackUrl);
+            } else {
+                setError("invalid email or password");
+            }
+        } catch (error: any) {
+            setError(error);
         }
-      try {
-        await axios.post("http://localhost:3000/api/register",{
-          email, password
-        });
-        router.push("/")
-      } catch (error) {
-        console.log(error)
-      }
+    };
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormValues({ ...formValues, [name]: value })
     }
     return (
         <div>
@@ -41,19 +63,19 @@ const Login = () => {
                 <div>
                     <span className="text-sm text-red-600">{error}</span>
                 </div>
-                <div className="text-left">
+                <form onSubmit={handleSubmit} className="text-left">
                     <div className="my-4 flex flex-col gap-3">
                         <Label htmlFor="email">Email <span className='text-red-600'>*</span></Label>
-                        <Input type="email" value={email} id="email" onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required />
+                        <Input type="email" name="email" value={formValues.email} id="email" onChange={handleChange} placeholder="Enter your email" required />
                     </div>
                     <div className="my-4 flex flex-col gap-3">
                         <Label htmlFor="password">Password <span className='text-red-600'>*</span></Label>
-                        <Input type="Password" value={password} id="Password" onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" required />
+                        <Input type="Password" name="password" value={formValues.password} id="Password" onChange={handleChange} placeholder="Enter your password" required />
                     </div>
                     <div className='my-3'>
-                        <Button onClick={register} className="w-full bg-red-500">Login</Button>
+                        <Button type="submit" className="w-full bg-red-500">Login</Button>
                     </div>
-                </div>
+                </form>
                 <div className="my-3 flex items-center gap-5">
                     <hr className="w-64 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
                     <span>or</span>
@@ -80,3 +102,17 @@ const Login = () => {
 }
 
 export default Login
+
+// const register = async () =>{
+//     if(!email || !password){
+//         setError("email and password are required")
+//     }
+//   try {
+//     await axios.post("http://localhost:3000/api/register",{
+//       email, password
+//     });
+//     router.push("/")
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
