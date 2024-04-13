@@ -10,7 +10,6 @@ const getPosts = async (): Promise<TPosts[] | null> => {
 
     if (res.ok) {
       const posts = await res.json();
-      console.log(posts);
       return posts;
     }
   } catch (error) {

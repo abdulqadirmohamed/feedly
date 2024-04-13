@@ -25,7 +25,7 @@ const Header = () => {
                 <button className="bg-red-500 text-white px-4 py-2 rounded-md mx-4" onClick={() => signOut()}>Logout</button>
               </div>
             ) : (
-              <Link className="bg-green-700 text-white px-4 py-2 rounded-md mx-4" href={"/sign-in"}>Sign In</Link>
+              <Link className="bg-green-700 text-white px-4 py-2 rounded-md mx-4 hover:animate-pulse" href={"/sign-in"}>Sign In</Link>
             )}
           </div>
           {status === 'authenticated' ? (

@@ -1,5 +1,6 @@
 import { TCategory } from "@/types/types";
 import Link from "next/link";
+import Loader from "./Loader";
 
 const getCategories = async (): Promise<TCategory[] | null> => {
   try {
@@ -19,7 +20,7 @@ export default async function CategoriesList() {
   const categories = await getCategories();
   return (
     <div className="flex gap-2 text-sm flex-wrap">
-      {categories &&
+      {categories && categories.length > 0 ?
         categories.map((category) => (
           <Link
             key={category.id}
@@ -28,7 +29,7 @@ export default async function CategoriesList() {
           >
             {category.categoryName}
           </Link>
-        ))}
+        )): <Loader/>}
     </div>
   );
 }

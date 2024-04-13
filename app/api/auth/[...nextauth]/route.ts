@@ -5,13 +5,41 @@ import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
 import prisma from "@/lib/prismadb";
+import Credentials from "next-auth/providers/credentials";
+import bcrypt from "bcrypt"
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
+    Credentials({
+      name: "credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" }
+      },
+      async authorize(credentials){
+        if(!credentials?.email || !credentials?.password){
+          return null
+        }
+        const user = await prisma.user.findFirst({
+          where: {
+            email: credentials.email
+          }
+        });
+        if(!user || !user.id || !user.hashedPassword){
+          return null
+        }
+        const correctPassword = await bcrypt.compare(credentials.password, user.hashedPassword);
+        if(!correctPassword){
+          return null
+        }
+
+        return user;
+      }
+    }),
     GitHubProvider({
-      clientId: "356d1482ca409b2f69a8",
-      clientSecret: "b77284fbf38287ace61e7a837644af271e085d11",
+      clientId: process.env.GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
