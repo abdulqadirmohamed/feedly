@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 
 const Login = () => {
@@ -44,6 +45,7 @@ const Login = () => {
                 console.log(res)
                 setError("invalid email or password");
                 router.push(callbackUrl);
+                router.refresh()
             }
         } catch (error: any) {
             console.log(error)
@@ -76,6 +78,9 @@ const Login = () => {
                     </div>
                     <div className='my-3'>
                         <Button type="submit" className="w-full bg-red-500">Login</Button>
+                    </div>
+                    <div className="text-center text-sm">
+                        <span>Don't have an account? <Link href={'/sign-up'} className="underline">Sign up</Link></span>
                     </div>
                 </form>
                 <div className="my-3 flex items-center gap-5">

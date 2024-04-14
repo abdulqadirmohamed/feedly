@@ -25,7 +25,7 @@ export default async function CategoriesList() {
           <Link
             key={category.id}
             className="px-4 py-1 rounded-md bg-slate-800 capitalize text-white cursor-pointer"
-            href={`/categories/${category.categoryName}`}
+            href={`/category/${category.categoryName}`}
           >
             {category.categoryName}
           </Link>
