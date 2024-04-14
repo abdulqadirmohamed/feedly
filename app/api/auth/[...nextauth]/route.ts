@@ -10,6 +10,10 @@ import bcrypt from "bcrypt"
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: 'jwt'
+  },
   providers: [
     Credentials({
       name: "credentials",
@@ -55,13 +59,9 @@ export const authOptions: AuthOptions = {
       }
       return token;
     },
-    // async session({ session, token }) {
-    //   session.user.id = token.userId;
-    //   return session;
-    // },
   },
 
-secret: process.env.NEXTAUTH_SECRET,
+
 };
 const handler = nextAuth(authOptions);
 

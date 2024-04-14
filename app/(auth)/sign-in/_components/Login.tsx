@@ -37,14 +37,16 @@ const Login = () => {
                 password: formValues.password,
                 callbackUrl,
             });
-
-            console.log(res);
-            if (!res?.error) {
-                router.push(callbackUrl);
+    
+            if (res?.error) {
+                console.log(res.error)
             } else {
+                console.log(res)
                 setError("invalid email or password");
+                router.push(callbackUrl);
             }
         } catch (error: any) {
+            console.log(error)
             setError(error);
         }
     };
