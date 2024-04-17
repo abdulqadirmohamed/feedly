@@ -16,6 +16,7 @@ const Header = () => {
           <Link href={"/technology"}>Technology</Link>
           <Link href={"/sports"}>Sports</Link>
           <Link href={"/programming"}>Programming</Link>
+          <Link href={"/test"}>test</Link>
         </nav>
         <div className="flex items-center gap-2">
         <Link href={"/create-post"}>Create Post</Link>

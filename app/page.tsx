@@ -1,5 +1,6 @@
 import CategoriesList from "@/components/Categories";
 import PostCards from "@/components/PostCards";
+import PostLoader from "@/components/loaders/PostLoader";
 import { TPosts } from "@/types/types";
 
 const getPosts = async (): Promise<TPosts[] | null> => {
@@ -26,20 +27,22 @@ export default async function Home() {
       <div className="w-[60%] mx-auto">
         <CategoriesList />
 
-        <div className="grid md:grid-cols-3 gap-6 mt-10">
+        <div className="mt-10">
           {posts && posts.length > 0 ? (
-            posts.map((post: TPosts) => (
-              <PostCards
-                key={post.id}
-                id={post.id}
-                title={post.title}
-                content={post.content}
-                author={post.author.name}
-                createdAt={post.createdAt}
-              />
-            ))
+            <div className="grid md:grid-cols-3 gap-6 ">
+              {posts.map((post: TPosts) => (
+                <PostCards
+                  key={post.id}
+                  id={post.id}
+                  title={post.title}
+                  content={post.content}
+                  author={post.author.name}
+                  createdAt={post.createdAt}
+                />
+              ))}
+            </div>
           ) : (
-            <div className="py-6">No posts to display</div>
+            <PostLoader />
           )}
         </div>
       </div>

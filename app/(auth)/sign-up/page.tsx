@@ -1,8 +1,9 @@
 import React from 'react'
+import UserRegisterForm from './_components/UserRegisterForm'
 
 const page = () => {
   return (
-    <div>page</div>
+    <UserRegisterForm/>
   )
 }
 

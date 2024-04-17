@@ -1,6 +1,6 @@
 import { TCategory } from "@/types/types";
 import Link from "next/link";
-import Loader from "./Loader";
+import Loader from "./loaders/Loader";
 
 const getCategories = async (): Promise<TCategory[] | null> => {
   try {
